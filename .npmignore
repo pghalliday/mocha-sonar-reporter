@@ -1,6 +1,6 @@
 /cookbooks/
 /test/
-/mock/
+/mocks/
 /vagrant-scripts/
 /.vagrant/
 /node_modules/

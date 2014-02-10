@@ -1,9 +1,10 @@
-function Suite() {
+function Suite(title) {
+  this.title = title;
   this.tests = [];
 }
 
 Suite.prototype.fullTitle = function() {
-  return 'suite';
+  return this.title;
 };
 
 Suite.prototype.addTest = function(test) {

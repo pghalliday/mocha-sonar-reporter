@@ -5,9 +5,9 @@ var Suite = require('../../mocks/Suite');
 
 describe('Suite', function() {
   describe('#fullTitle', function() {
-    it('should return "suite"', function() {
-      var suite = new Suite();
-      suite.fullTitle().should.equal('suite');
+    it('should return the title provided in the constructor', function() {
+      var suite = new Suite('Suite');
+      suite.fullTitle().should.equal('Suite');
     })
   });
 

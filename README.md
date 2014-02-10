@@ -2,7 +2,7 @@ mocha-sonar-reporter
 ====================
 
 [![Build Status](https://travis-ci.org/pghalliday/mocha-sonar-reporter.png)](https://travis-ci.org/pghalliday/mocha-sonar-reporter)
-[![Coverage Status](https://coveralls.io/repos/pghalliday/mocha-sonar-reporter/badge.png?branch=master)](https://coveralls.io/r/pghalliday/mocha-sonar-reporter?branch=master)
+[![Coverage Status](https://coveralls.io/repos/pghalliday/mocha-sonar-reporter/badge.png)](https://coveralls.io/r/pghalliday/mocha-sonar-reporter)
 [![Dependency Status](https://david-dm.org/pghalliday/mocha-sonar-reporter.png?theme=shields.io)](https://david-dm.org/pghalliday/mocha-sonar-reporter)
 [![devDependency Status](https://david-dm.org/pghalliday/mocha-sonar-reporter/dev-status.png?theme=shields.io)](https://david-dm.org/pghalliday/mocha-sonar-reporter#info=devDependencies)
 

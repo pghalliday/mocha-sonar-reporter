@@ -21,7 +21,7 @@
       "url": "https://github.com/pghalliday/mocha-sonar-reporter/blob/master/LICENSE-MIT"
     }
   ],
-  "main": "lib/sonar.js",
+  "main": "lib/Sonar.js",
   "engines": {
     "node": ">= 0.10.4"
   },

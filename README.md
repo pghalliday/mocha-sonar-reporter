@@ -13,7 +13,10 @@ This is a modification of the existing `xunit` reporter that ships with `Mocha`.
 - Sonar will reject reports that have a `classname` that mirrors a source file, eg. if you have a source file called `MyClass.js` then you cannot have a test with a `classname` of `MyClass`
 - Sonar interprets the `classname` field as a filename resulting in hard to read test reports in the Sonar UI (this is probably also the cause of the first issue)
 
-This reporter will generate `xunit` output that uses the concatenation of the suite and test titles as the test `name` and set the `classname` to a configurable constant so that name collisions can be avoided. If no `classname` is configured it will default to `Test`.
+This reporter will generate `xunit` output that uses the concatenation of the suite and test titles as the test `name` and set the `classname` to:
+
+- if `testdir` is defined in config, the test file relative path
+- else a configurable constant so that name collisions can be avoided. If no `classname` is configured it will default to `Test`.
 
 Usage
 -----
@@ -36,6 +39,18 @@ Configure the `classname` in `package.json` (optional)
   ...
 ```
 
+Configure the `testdir` in `package.json` (optional)
+
+```
+  ...
+  "config": {
+    "mocha-sonar-reporter": {
+      "testdir": "tests"
+    }
+  },
+  ...
+```
+
 Add the following to your `/sonar-project.properties` file
 
 ```
@@ -51,6 +66,7 @@ mocha -r mocha-sonar-reporter > reports/TEST-all.xml
 NB. feel free to change paths and file names above ;)
 
 NNB. Although not documented here, you may also like to use `Grunt` and the `grunt-mocha-test` plugin to do this and get coverage data, etc
+You can then use property `captureFile` to collect directly task output in designated file.
 
 
 License

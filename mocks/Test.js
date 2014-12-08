@@ -1,4 +1,4 @@
-function Test(title, duration, state, error) {
+function Test(title, duration, state, error, file) {
   this.title = title;
   this.duration = duration;
   this.state = state;
@@ -6,6 +6,7 @@ function Test(title, duration, state, error) {
   if (state === 'pending') {
     this.pending = true;
   }
+  this.file = file || '';
 }
 
 Test.prototype.slow = function() {

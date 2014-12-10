@@ -115,7 +115,8 @@ describe('Sonar', function() {
   });
 
   it('should use the configured output file to write output', function(done) {
-    var outputFile = __dirname + '/../output.xml';
+    var outputFile = path.join(process.cwd(), 'test/output.xml');
+
     var runner = new Runner();
     var sonar = new Sonar(runner);
     var suite = new Suite('Suite');

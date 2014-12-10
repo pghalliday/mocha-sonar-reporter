@@ -54,5 +54,8 @@
     "sonar",
     "xunit",
     "test"
-  ]
+  ],
+  "dependencies": {
+    "mkdirp": "^0.5.0"
+  }
 }

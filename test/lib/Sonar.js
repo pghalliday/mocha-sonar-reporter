@@ -2,6 +2,8 @@ var chai = require('chai');
 var sinon = require('sinon');
 var sinonChai = require('sinon-chai');
 var path = require('path');
+var fs = require('fs');
+var os = require('os');
 chai.should();
 chai.use(sinonChai);
 
@@ -12,6 +14,13 @@ var Test = require('../../mocks/Test');
 var escape = require('../../lib/escape');
 
 describe('Sonar', function() {
+
+  afterEach(function () {
+    delete process.env.npm_package_config_mocha_sonar_reporter_classname;
+    delete process.env.npm_package_config_mocha_sonar_reporter_testdir;
+    delete process.env.npm_package_config_mocha_sonar_reporter_outputfile;
+  });
+
   it('should output with the correct classnames and test results', function() {
     var spy = sinon.spy();
     var runner = new Runner();
@@ -77,7 +86,6 @@ describe('Sonar', function() {
     suite.addTest(new Test('Test 3', 10, 'failed', error));
     process.env.npm_package_config_mocha_sonar_reporter_classname = 'classname';
     runner.run(suite);
-    process.env.npm_package_config_mocha_sonar_reporter_classname = undefined;
     spy.callCount.should.equal(5);
     spy.args[0][0].should.match(/<testsuite name="Mocha Tests" tests="3" failures="1" errors="1" skipped="1"/);
     spy.args[1][0].should.equal('<testcase classname="classname" name="Suite Test 1" time="0.01"><skipped/></testcase>');
@@ -98,12 +106,49 @@ describe('Sonar', function() {
     suite.addTest(new Test('Test 3', 10, 'failed', error, path.join(cwd, 'tests', 'bar/hello/world.js')));
     process.env.npm_package_config_mocha_sonar_reporter_testdir = 'tests';
     runner.run(suite);
-    process.env.npm_package_config_mocha_sonar_reporter_testdir = undefined;
     spy.callCount.should.equal(5);
     spy.args[0][0].should.match(/<testsuite name="Mocha Tests" tests="3" failures="1" errors="1" skipped="1"/);
     spy.args[1][0].should.equal('<testcase classname="foo" name="Suite Test 1" time="0.01"><skipped/></testcase>');
     spy.args[2][0].should.equal('<testcase classname="bar/foo" name="Suite Test 2" time="0.01"/>');
     spy.args[3][0].should.equal('<testcase classname="bar/hello/world" name="Suite Test 3" time="0.01" message="Test"><failure classname="bar/hello/world" name="Suite Test 3" time="0.01" message="Test"><![CDATA[' + escape(error.stack) + ']]></failure></testcase>');
     spy.args[4][0].should.equal('</testsuite>');
+  });
+
+  it('should use the configured output file to write output', function(done) {
+    var outputFile = path.join(process.cwd(), 'test/output.xml');
+
+    var runner = new Runner();
+    var sonar = new Sonar(runner);
+    var suite = new Suite('Suite');
+    var error = new Error('Test');
+
+    // given
+    process.env.npm_package_config_mocha_sonar_reporter_outputfile = 'test/output.xml';
+
+    // first remove the output file
+    if (fs.existsSync(outputFile)) {
+      fs.unlinkSync(outputFile);
+    }
+
+    suite.addTest(new Test('Test 1', 10, 'pending'));
+    suite.addTest(new Test('Test 2', 10, 'passed'));
+    suite.addTest(new Test('Test 3', 10, 'failed', error));
+
+    // then
+    runner.on('end', function() {
+      var output = fs.readFileSync(outputFile, 'utf8');
+      var lines = output.split('>' + os.EOL);
+      lines.length.should.equal(6);
+      lines[0].should.match(/<testsuite name="Mocha Tests" tests="3" failures="1" errors="1" skipped="1"/);
+      lines[1].should.equal('<testcase classname="Test" name="Suite Test 1" time="0.01"><skipped/></testcase');
+      lines[2].should.equal('<testcase classname="Test" name="Suite Test 2" time="0.01"/');
+      lines[3].should.equal('<testcase classname="Test" name="Suite Test 3" time="0.01" message="Test"><failure classname="Test" name="Suite Test 3" time="0.01" message="Test"><![CDATA[' + escape(error.stack) + ']]></failure></testcase');
+      lines[4].should.equal('</testsuite');
+
+      done();
+    });
+
+    // when
+    runner.run(suite);
   });
 });

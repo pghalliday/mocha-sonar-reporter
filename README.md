@@ -51,6 +51,18 @@ Configure the `testdir` in `package.json` (optional)
   ...
 ```
 
+Configure the `outputfile` in `package.json`, to generate data in file instead of stdout (optional)
+
+```
+  ...
+  "config": {
+    "mocha-sonar-reporter": {
+      "outputfile": "test/TEST-all.xml"
+    }
+  },
+  ...
+```
+
 Add the following to your `/sonar-project.properties` file
 
 ```
@@ -60,13 +72,12 @@ sonar.javascript.jstestdriver.reportsPath=reports
 Specify the `mocha-sonar-reporter` when running mocha
 
 ```
-mocha -r mocha-sonar-reporter > reports/TEST-all.xml
+mocha -r mocha-sonar-reporter
 ```
 
 NB. feel free to change paths and file names above ;)
 
 NNB. Although not documented here, you may also like to use `Grunt` and the `grunt-mocha-test` plugin to do this and get coverage data, etc
-You can then use property `captureFile` to collect directly task output in designated file.
 
 
 License

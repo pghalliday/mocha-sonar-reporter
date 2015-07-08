@@ -16,11 +16,13 @@ module.exports = function(grunt) {
     copy: {
       test: {
         src: ['test/**'],
-        dest: 'lib-cov/'
+        dest: 'lib-cov/',
+        expand: true
       },
       fixtures: {
         src: ['fixtures/**'],
-        dest: 'lib-cov/'
+        dest: 'lib-cov/',
+        expand: true
       }
     },
     blanket: {

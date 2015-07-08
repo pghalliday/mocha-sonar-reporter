@@ -79,11 +79,21 @@ NB. feel free to change paths and file names above ;)
 
 NNB. Although not documented here, you may also like to use `Grunt` and the `grunt-mocha-test` plugin to do this and get coverage data, etc
 
+Contributing
+------------
 
-License
+Add tests for changes and run
+
+```
+npm test
+```
+
+LICENSE
 -------
 
-Copyright &copy; 2014 Peter Halliday  
+Copyright &copy; 2015 Peter Halliday  
 Licensed under the MIT license.
 
-[![Donate Bitcoins](https://coinbase.com/assets/buttons/donation_large-6ec72b1a9eec516944e50a22aca7db35.png)](https://coinbase.com/checkouts/9d121c0321590556b32241bbe7960362)
+[![Donate Bitcoins](http://i.imgur.com/b5BZsFH.png)](bitcoin:17LtnRG4WxRLYBWzrBoEKP3F7fZx8vcAsK?amount=0.01&label=grunt-mocha-test)
+
+[17LtnRG4WxRLYBWzrBoEKP3F7fZx8vcAsK](bitcoin:17LtnRG4WxRLYBWzrBoEKP3F7fZx8vcAsK?amount=0.01&label=grunt-mocha-test)

@@ -32,7 +32,7 @@
   "devDependencies": {
     "grunt-cli": "~0.1.13",
     "grunt": "~0.4.2",
-    "chai": "~3.0.0",
+    "chai": "~3.3.0",
     "grunt-blanket": "~0.0.8",
     "grunt-contrib-copy": "~0.8.0",
     "grunt-contrib-clean": "~0.6.0",

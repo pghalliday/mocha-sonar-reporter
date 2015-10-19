@@ -45,7 +45,11 @@ Configure the `testdir` in `package.json` (optional)
   ...
   "config": {
     "mocha-sonar-reporter": {
-      "testdir": "tests"
+      "testdir": "tests",
+      // Optionally configure a suffix for the extracted class names.
+      // It has been reported that some versions of the sonar javascript
+      // plugin require class names to have a `.js` suffix
+      "classnameSuffix": ".js"
     }
   },
   ...

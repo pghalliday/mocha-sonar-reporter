@@ -83,6 +83,18 @@ NB. feel free to change paths and file names above ;)
 
 NNB. Although not documented here, you may also like to use `Grunt` and the `grunt-mocha-test` plugin to do this and get coverage data, etc
 
+A note on use outside of `npm`
+------------------------------
+
+The options for the reporter are added to `package.json`. This means that they are only loaded if `mocha` is run via `npm` (eg. via `npm test`). If you wish to use the reporter without `npm` then the options can still be specified in environment variables using the naming conventions that `npm` uses internally. ie:
+
+```
+npm_package_config_mocha_sonar_reporter_outputfile
+npm_package_config_mocha_sonar_reporter_classname
+npm_package_config_mocha_sonar_reporter_testdir
+npm_package_config_mocha_sonar_reporter_classnameSuffix
+```
+
 Contributing
 ------------
 

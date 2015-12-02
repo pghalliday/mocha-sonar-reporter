@@ -76,7 +76,7 @@ sonar.javascript.jstestdriver.reportsPath=reports
 Specify the `mocha-sonar-reporter` when running mocha
 
 ```
-mocha -r mocha-sonar-reporter
+mocha -R mocha-sonar-reporter
 ```
 
 NB. feel free to change paths and file names above ;)

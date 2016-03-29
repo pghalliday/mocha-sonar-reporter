@@ -114,6 +114,30 @@ describe('Sonar', function() {
     spy.args[4][0].should.equal('</testsuite>');
   });
 
+  it('should handle an undefined test file when testdir is configured', function() {
+    // given
+    var logStub = sinon.stub();
+    var runner = new Runner();
+    var sonar = new Sonar(runner, logStub);
+    var suite = new Suite('Suite');
+    var error = new Error('Test');
+
+    process.env.npm_package_config_mocha_sonar_reporter_testdir = 'foo';
+
+    suite.addTest(new Test('Test 1', 10, 'failed', error).withUndefinedFile());
+
+    // then
+    runner.on('end', function () {
+        logStub.callCount.should.equal(3);
+        logStub.should.have.been.calledWithMatch(/<testsuite name="Mocha Tests" tests="1" failures="1" errors="1" skipped="0"/);
+        logStub.should.have.been.calledWith('<testcase classname="Test" name="Suite Test 1" time="0.01" message="Test"><failure classname="Test" name="Suite Test 1" time="0.01" message="Test"><![CDATA[' + escape(error.stack) + ']]></failure></testcase>');
+        logStub.should.have.been.calledWith('</testsuite>');
+    });
+
+    // when
+    runner.run(suite);
+  });
+
   it('should support any file extension', function () {
     var spy = sinon.spy();
     var runner = new Runner();

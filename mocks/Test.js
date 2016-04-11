@@ -13,4 +13,9 @@ Test.prototype.slow = function() {
   return 200;
 };
 
+Test.prototype.withUndefinedFile = function() {
+  this.file = undefined;
+  return this;
+};
+
 module.exports = Test;

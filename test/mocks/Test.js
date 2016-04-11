@@ -1,5 +1,5 @@
 var chai = require('chai');
-chai.should();
+var should = chai.should();
 
 var Test = require('../../mocks/Test');
 
@@ -21,6 +21,16 @@ describe('Test', function() {
     it('should return 200', function() {
       var test = new Test();
       test.slow().should.equal(200);
+    });
+  });
+
+  describe('#withEmptyFile', function() {
+    it('should return the test and set the file to undefined', function() {
+      // when
+      var test = new Test().withUndefinedFile();
+
+      // then
+      should.equal(test.file, undefined);
     });
   });
 });

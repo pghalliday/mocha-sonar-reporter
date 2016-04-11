@@ -1,7 +1,7 @@
 {
   "name": "mocha-sonar-reporter",
   "description": "Sonar friendly xunit reporter for Mocha",
-  "version": "0.1.4",
+  "version": "0.1.5",
   "homepage": "https://github.com/pghalliday/mocha-sonar-reporter",
   "author": {
     "name": "Peter Halliday",

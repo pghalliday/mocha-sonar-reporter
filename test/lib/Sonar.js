@@ -249,4 +249,29 @@ describe('Sonar', function() {
     // when
     runner.run(suite);
   });
+  
+  it('should handle log parameter', function() {
+    // given
+    var logStub = sinon.stub();
+    var options = {
+      log : logStub
+    };
+    var runner = new Runner();
+    var sonar = new Sonar(runner, logStub);
+    var suite = new Suite('Suite');
+    var error = new Error('Test');
+
+    process.env.npm_package_config_mocha_sonar_reporter_testdir = 'foo';
+
+    suite.addTest(new Test('Test 1', 10, 'failed', error).withUndefinedFile());
+
+    // then
+    runner.on('end', function () {
+        logStub.callCount.should.equal(3);
+    });
+
+    // when
+    runner.run(suite);
+  });
+
 });

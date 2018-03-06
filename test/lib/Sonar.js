@@ -216,4 +216,62 @@ describe('Sonar', function() {
     // when
     runner.run(suite);
   });
+  
+  it('should use the configured unitTestResultsFile parameter to write output', function(done) {
+    var outputFile = 'test/UT-results.xml';
+    var options = {
+      unitTestResultsFile : outputFile
+    };
+
+    var runner = new Runner();
+    var sonar = new Sonar(runner, options);
+    var suite = new Suite('Suite');
+    var error = new Error('Test');
+
+    suite.addTest(new Test('Test 1', 10, 'pending'));
+    suite.addTest(new Test('Test 2', 10, 'passed'));
+    suite.addTest(new Test('Test 3', 10, 'failed', error));
+
+    // then
+    runner.on('end', function() {
+      var output = fs.readFileSync(outputFile, 'utf8');
+      var lines = output.split('>' + os.EOL);
+      lines.length.should.equal(6);
+      lines[0].should.match(/<testsuite name="Mocha Tests" tests="3" failures="1" errors="1" skipped="1"/);
+      lines[1].should.equal('<testcase classname="Test" name="Suite Test 1" time="0.01"><skipped/></testcase');
+      lines[2].should.equal('<testcase classname="Test" name="Suite Test 2" time="0.01"/');
+      lines[3].should.equal('<testcase classname="Test" name="Suite Test 3" time="0.01" message="Test"><failure classname="Test" name="Suite Test 3" time="0.01" message="Test"><![CDATA[' + escape(error.stack) + ']]></failure></testcase');
+      lines[4].should.equal('</testsuite');
+
+      done();
+    });
+
+    // when
+    runner.run(suite);
+  });
+  
+  it('should handle log parameter', function() {
+    // given
+    var logStub = sinon.stub();
+    var options = {
+      log : logStub
+    };
+    var runner = new Runner();
+    var sonar = new Sonar(runner, logStub);
+    var suite = new Suite('Suite');
+    var error = new Error('Test');
+
+    process.env.npm_package_config_mocha_sonar_reporter_testdir = 'foo';
+
+    suite.addTest(new Test('Test 1', 10, 'failed', error).withUndefinedFile());
+
+    // then
+    runner.on('end', function () {
+        logStub.callCount.should.equal(3);
+    });
+
+    // when
+    runner.run(suite);
+  });
+
 });
